@@ -29,16 +29,45 @@ namespace FileZipper
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string [] selectedFiles = openFileDialog.FileNames;
-                    if(selectedFiles.Length>0)
+                    if(selectedFiles.Length == 1 && Path.GetExtension(selectedFiles[0])==".zip")
+                    {
+                        listOfFiles.Clear();
+                        listOfFiles.Add(selectedFiles[0]);
+                        listBox.Items.Clear();
+                        listBox.Items.Add(Path.GetFileName(selectedFiles[0]));
+                        zipUnzip = false;
+                    }
+                    else if(selectedFiles.Length>0)
                     {
                         for (int i =0; i<selectedFiles.Length; ++i)
                         {
+                            if(listOfFiles.Contains(selectedFiles[i]))
+                            {
+                                MessageBox.Show("File already in the list!");
+                                continue;
+                            }
+                            if (Path.GetExtension(selectedFiles[i]) == ".zip")
+                            {
+
+                            }
                             listOfFiles.Add(selectedFiles[i]);
                             listBox.Items.Add(Path.GetFileName(selectedFiles[i]));
 
                         }
-                        zip_btn.Visible = true;
                     }
+                    if (listOfFiles.Count==1 && Path.GetExtension(listOfFiles.First())==".zip")
+                    {
+                        zipUnzip = false;
+                        zip_btn.Text = "UNZIP";
+                        zip_btn.ForeColor = Color.Blue;
+                    }
+                    else
+                    {
+                        zipUnzip = true;
+                        zip_btn.Text = "ZIP";
+                        zip_btn.ForeColor = Color.Red;
+                    }
+                    zip_btn.Visible = true;
                 }
             }
         }

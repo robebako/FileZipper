@@ -84,6 +84,7 @@ namespace FileZipper
         private System.Windows.Forms.Button zip_btn;
         //private string[] selectedFiles;
         List<string> listOfFiles;
+        bool zipUnzip = true;
     }
 }
 
