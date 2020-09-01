@@ -61,6 +61,7 @@ namespace FileZipper
             this.zip_btn.TabIndex = 2;
             this.zip_btn.Text = "ZIP";
             this.zip_btn.UseVisualStyleBackColor = true;
+            this.zip_btn.Click += new System.EventHandler(this.zip_btn_Click);
             // 
             // Form1
             // 

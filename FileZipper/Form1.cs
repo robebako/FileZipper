@@ -42,5 +42,23 @@ namespace FileZipper
                 }
             }
         }
+
+        private void zip_btn_Click(object sender, EventArgs e)
+        {
+            
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                if(saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ZipArchive zip = ZipFile.Open(saveFileDialog.FileName, ZipArchiveMode.Create);
+                    foreach (string file in listOfFiles)
+                    {
+                        zip.CreateEntryFromFile(file, Path.GetFileName(file), CompressionLevel.Optimal);
+                    }
+                    zip.Dispose();
+                }
+                MessageBox.Show("ZIP file created successfully!");
+            }
+        }
     }
 }
