@@ -29,14 +29,6 @@ namespace FileZipper
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string [] selectedFiles = openFileDialog.FileNames;
-                    //if(selectedFiles.Length == 1 && Path.GetExtension(selectedFiles[0])==".zip")
-                    //{
-                    //    listOfFiles.Clear();
-                    //    listOfFiles.Add(selectedFiles[0]);
-                    //    listBox.Items.Clear();
-                    //    listBox.Items.Add(Path.GetFileName(selectedFiles[0]));
-                    //    zipUnzip = false;
-                    //}
                     if(selectedFiles.Length>0)
                     {
                         for (int i =0; i<selectedFiles.Length; ++i)
