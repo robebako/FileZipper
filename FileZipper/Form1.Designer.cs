@@ -1,4 +1,6 @@
-﻿namespace FileZipper
+﻿using System.Collections.Generic;
+
+namespace FileZipper
 {
     partial class Form1
     {
@@ -79,6 +81,8 @@
         private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.Button select_btn;
         private System.Windows.Forms.Button zip_btn;
+        //private string[] selectedFiles;
+        List<string> listOfFiles;
     }
 }
 

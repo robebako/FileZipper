@@ -17,18 +17,27 @@ namespace FileZipper
         public Form1()
         {
             InitializeComponent();
+            zip_btn.Visible = false;
+            listOfFiles = new List<string>();
         }
 
         private void select_btn_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
+                openFileDialog.Multiselect = true;
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string[] files = openFileDialog.FileNames;
-                    foreach(string file in files)
+                    string [] selectedFiles = openFileDialog.FileNames;
+                    if(selectedFiles.Length>0)
                     {
-                        listBox.Items.Add(Path.GetFileName(file));
+                        for (int i =0; i<selectedFiles.Length; ++i)
+                        {
+                            listOfFiles.Add(selectedFiles[i]);
+                            listBox.Items.Add(Path.GetFileName(selectedFiles[i]));
+
+                        }
+                        zip_btn.Visible = true;
                     }
                 }
             }
