@@ -29,15 +29,15 @@ namespace FileZipper
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string [] selectedFiles = openFileDialog.FileNames;
-                    if(selectedFiles.Length == 1 && Path.GetExtension(selectedFiles[0])==".zip")
-                    {
-                        listOfFiles.Clear();
-                        listOfFiles.Add(selectedFiles[0]);
-                        listBox.Items.Clear();
-                        listBox.Items.Add(Path.GetFileName(selectedFiles[0]));
-                        zipUnzip = false;
-                    }
-                    else if(selectedFiles.Length>0)
+                    //if(selectedFiles.Length == 1 && Path.GetExtension(selectedFiles[0])==".zip")
+                    //{
+                    //    listOfFiles.Clear();
+                    //    listOfFiles.Add(selectedFiles[0]);
+                    //    listBox.Items.Clear();
+                    //    listBox.Items.Add(Path.GetFileName(selectedFiles[0]));
+                    //    zipUnzip = false;
+                    //}
+                    if(selectedFiles.Length>0)
                     {
                         for (int i =0; i<selectedFiles.Length; ++i)
                         {
@@ -74,22 +74,35 @@ namespace FileZipper
 
         private void zip_btn_Click(object sender, EventArgs e)
         {
-            
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            if(zipUnzip)
             {
-                saveFileDialog.Filter = "Zip files | *.zip";
-                saveFileDialog.DefaultExt = "zip";
-                if(saveFileDialog.ShowDialog() == DialogResult.OK)
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
-                    ZipArchive zip = ZipFile.Open(saveFileDialog.FileName, ZipArchiveMode.Create);
-                    foreach (string file in listOfFiles)
+                    saveFileDialog.Filter = "Zip files | *.zip";
+                    saveFileDialog.DefaultExt = "zip";
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        zip.CreateEntryFromFile(file, Path.GetFileName(file), CompressionLevel.Optimal);
+                        ZipArchive zip = ZipFile.Open(saveFileDialog.FileName, ZipArchiveMode.Create);
+                        foreach (string file in listOfFiles)
+                        {
+                            zip.CreateEntryFromFile(file, Path.GetFileName(file), CompressionLevel.Optimal);
+                        }
+                        MessageBox.Show("ZIP file created successfully!");
+                        zip.Dispose();
                     }
-                    MessageBox.Show("ZIP file created successfully!");
-                    zip.Dispose();
                 }
             }
+            else
+            {
+
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            listOfFiles.Clear();
+            listBox.Items.Clear();
+            zip_btn.Visible = false;
         }
     }
 }
