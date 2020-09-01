@@ -38,6 +38,7 @@ namespace FileZipper
             // 
             // listBox
             // 
+            this.listBox.Enabled = false;
             this.listBox.FormattingEnabled = true;
             this.listBox.Location = new System.Drawing.Point(12, 12);
             this.listBox.Name = "listBox";

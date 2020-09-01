@@ -82,11 +82,16 @@ namespace FileZipper
                     saveFileDialog.DefaultExt = "zip";
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
+                        listBox.Items.Clear();
+                        listBox.Items.Add("***Zipped files: ***");
                         ZipArchive zip = ZipFile.Open(saveFileDialog.FileName, ZipArchiveMode.Create);
                         foreach (string file in listOfFiles)
                         {
                             zip.CreateEntryFromFile(file, Path.GetFileName(file), CompressionLevel.Optimal);
+                            listBox.Items.Add(Path.GetFileName(file));
                         }
+                        select_btn.Enabled = false;
+                        zip_btn.Visible = false;
                         MessageBox.Show("ZIP file created successfully!");
                         zip.Dispose();
                     }
@@ -94,7 +99,25 @@ namespace FileZipper
             }
             else
             {
-
+                using (FolderBrowserDialog folderBrowserDialog= new FolderBrowserDialog())
+                {
+                    if(folderBrowserDialog.ShowDialog()==DialogResult.OK)
+                    {
+                        listBox.Items.Clear();
+                        listBox.Items.Add("***Extracted files: ***");
+                        ZipArchive zip = ZipFile.OpenRead(listOfFiles.First());
+                        foreach (ZipArchiveEntry entry in zip.Entries)
+                        {
+                            listBox.Items.Add(entry.FullName);
+                        }
+                        ZipFile.ExtractToDirectory(listOfFiles.First(), folderBrowserDialog.SelectedPath);
+                        listOfFiles.Clear();
+                        zip.Dispose();
+                        MessageBox.Show("ZIP file extracted successfully!");
+                        select_btn.Enabled = false;
+                        zip_btn.Visible = false;
+                    }
+                }
             }
         }
 
@@ -103,6 +126,7 @@ namespace FileZipper
             listOfFiles.Clear();
             listBox.Items.Clear();
             zip_btn.Visible = false;
+            select_btn.Enabled = true;
         }
     }
 }
