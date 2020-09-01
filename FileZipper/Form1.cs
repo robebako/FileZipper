@@ -48,6 +48,8 @@ namespace FileZipper
             
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
+                saveFileDialog.Filter = "Zip files | *.zip";
+                saveFileDialog.DefaultExt = "zip";
                 if(saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     ZipArchive zip = ZipFile.Open(saveFileDialog.FileName, ZipArchiveMode.Create);
@@ -55,9 +57,9 @@ namespace FileZipper
                     {
                         zip.CreateEntryFromFile(file, Path.GetFileName(file), CompressionLevel.Optimal);
                     }
+                    MessageBox.Show("ZIP file created successfully!");
                     zip.Dispose();
                 }
-                MessageBox.Show("ZIP file created successfully!");
             }
         }
     }
