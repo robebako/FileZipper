@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.IO.Compression;
 
 namespace FileZipper
 {
@@ -15,6 +17,21 @@ namespace FileZipper
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void select_btn_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string[] files = openFileDialog.FileNames;
+                    foreach(string file in files)
+                    {
+                        listBox.Items.Add(Path.GetFileName(file));
+                    }
+                }
+            }
         }
     }
 }
